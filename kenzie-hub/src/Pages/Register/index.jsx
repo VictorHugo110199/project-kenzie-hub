@@ -23,6 +23,9 @@ function Register () {
     }
 
     const formSchema = yup.object().shape({
+        name: yup
+            .string()
+            .required("Nome Obrigatorio"),
         email: yup
             .string()
             .required("Email Obrigatorio")
@@ -30,6 +33,17 @@ function Register () {
         password: yup
             .string()
             .required("Senha obrigatoria"),
+        confirmpassword: yup
+            .string()
+            .oneOf([yup.ref('password')], 'Confirmação de senha errada'),
+        bio: yup
+            .string()
+            .required("Bio Obrigatorio"),
+        contact: yup
+            .string()
+            .required("Contato Obrigatorio"),
+        course_module: yup
+            .required("Selecionar o modulo")
     })
 
     const { register, handleSubmit, formState:{ errors } } = useForm({
@@ -47,33 +61,33 @@ function Register () {
                 <h4>Rapido e grátis, vamos nessa</h4>
                 <DivNameInput>
                     <p>Nome</p>
-                    <input type="text" {...register("name")}/>
-                    {errors.email?.message}
+                    <input type="text" id="name"{...register("name")}/>
+                    {errors.name?.message}
                 </DivNameInput>
                 <DivNameInput>
                     <p>Email</p>
-                    <input type="text" {...register("email")}/>
+                    <input type="email" id="email"{...register("email")}/>
                     {errors.email?.message}
                 </DivNameInput>
                 <DivNameInput>
                     <p>Senha</p>
-                    <input type="text" {...register("password")}/>
-                    {errors.email?.message}
+                    <input type="password" id="password" {...register("password")}/>
+                    {errors.password?.message}
                 </DivNameInput>
                 <DivNameInput>
                     <p>Confirmar sua senha</p>
-                    <input type="text" {...register("confirmpassword")}/>
-                    {errors.email?.message}
+                    <input type="password" id="confirmpassword" {...register("confirmpassword")}/>
+                    {errors.confirmpassword?.message}
                 </DivNameInput>
                 <DivNameInput>
                     <p>Bio</p>
-                    <input type="text" {...register("bio")}/>
-                    {errors.email?.message}
+                    <input type="text" id="bio" {...register("bio")}/>
+                    {errors.bio?.message}
                 </DivNameInput>
                 <DivNameInput>
                     <p>Contato</p>
-                    <input type="text" {...register("contact")}/>
-                    {errors.email?.message}
+                    <input type="text" id="contact" {...register("contact")}/>
+                    {errors.contact?.message}
                 </DivNameInput>
                 <DivNameInput>
                     <p>Selecionar modulo</p>
