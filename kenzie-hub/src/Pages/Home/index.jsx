@@ -9,12 +9,17 @@ function Home ({user}) {
     const name = (user.user.name)
     const module = (user.user.course_module)
 
+    function LogOut () {
+        window.localStorage.clear()
+        navigate("/")
+    }
+
     return (
         <ContainerPage>
             <Header>
                 <div>
                     <img src={Logo} alt="Logo kenziehub" />
-                    <button onClick={() =>  navigate("/")}>Sair</button>
+                    <button onClick={() => LogOut()}>Sair</button>
                 </div>
             </Header>
             <DivUserInfos>
