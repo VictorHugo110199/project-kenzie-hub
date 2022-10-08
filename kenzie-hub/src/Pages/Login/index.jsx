@@ -13,7 +13,7 @@ function Login ({setUser}) {
     const navigate = useNavigate()
 
     const onSubmitFunction = (data) => {
-        console.log(data)
+        reset()
         axios
         .post("https://kenziehub.herokuapp.com/sessions", data)
         .then((res) => {
@@ -37,7 +37,7 @@ function Login ({setUser}) {
             .required("Senha obrigatoria"),
     })
 
-    const { register, handleSubmit, formState:{ errors } } = useForm({
+    const { register, handleSubmit, formState:{ errors }, reset } = useForm({
         resolver: yupResolver(formSchema)
     })
 

@@ -12,7 +12,7 @@ function Register () {
     const navigate = useNavigate()
 
     const onSubmitFunction = (data) => {
-        console.log(data)
+        reset()
         axios
         .post("https://kenziehub.herokuapp.com/users", data)
         .then((res) => {
@@ -42,11 +42,9 @@ function Register () {
         contact: yup
             .string()
             .required("Contato Obrigatorio"),
-        course_module: yup
-            .required("Selecionar o modulo")
     })
 
-    const { register, handleSubmit, formState:{ errors } } = useForm({
+    const { register, handleSubmit, formState:{ errors }, reset} = useForm({
         resolver: yupResolver(formSchema)
     })
 
