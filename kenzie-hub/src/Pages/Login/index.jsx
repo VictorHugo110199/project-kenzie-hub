@@ -3,10 +3,9 @@ import { ContainerDiv, DivForm, BtnCadastrar, BtnLogin} from "./style";
 import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-
+import api from "../../services/api";
 
 function Login ({setUser}) {
 
@@ -14,8 +13,8 @@ function Login ({setUser}) {
 
     const onSubmitFunction = (data) => {
         reset()
-        axios
-        .post("https://kenziehub.herokuapp.com/sessions", data)
+        api
+        .post("/sessions", data)
         .then((res) => {
             setUser(res.data)
             window.localStorage.clear()
@@ -49,12 +48,12 @@ function Login ({setUser}) {
                     <h2>Login</h2>
                     <div>
                         <p>E-mail</p>
-                        <input type="text" placeholder='Digite seu email' {...register("email")}/>
+                        <input type="email" placeholder='Digite seu email' {...register("email")}/>
                         {errors.email?.message}
                     </div>
                     <div>
                         <p>Senha</p>
-                        <input type="text" placeholder='Digite sua senha' {...register("password")}/>
+                        <input type="password" placeholder='Digite sua senha' {...register("password")}/>
                         {errors.password?.message}
                     </div>
                     <BtnLogin type='submit'>Entrar</BtnLogin>

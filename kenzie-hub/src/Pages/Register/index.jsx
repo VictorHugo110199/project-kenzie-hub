@@ -3,9 +3,9 @@ import { ContainerForm, DivHeader, DivForm, DivNameInput} from "./style";
 import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import  api  from "../../services/api"
 
 function Register () {
 
@@ -13,11 +13,13 @@ function Register () {
 
     const onSubmitFunction = (data) => {
         reset()
-        axios
-        .post("https://kenziehub.herokuapp.com/users", data)
+
+        api
+        .post("/users", data)
         .then((res) => {
+            console.log(res)
             toast("Conta criada com sucesso!")
-            navigate("/")
+            //navigate("/")
         })
         .catch((err) => toast(err.response.data.message[0]))
     }
@@ -32,7 +34,8 @@ function Register () {
             .email("Email invalido"),
         password: yup
             .string()
-            .required("Senha obrigatoria"),
+            .required("Senha obrigatoria")
+            .matches(/(^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*_-])).{8,}$/, "Senha Invalida"),
         confirmpassword: yup
             .string()
             .oneOf([yup.ref('password')], 'Confirmação de senha errada'),

@@ -68,6 +68,7 @@ export const DivForm = styled.form`
         border-radius: 4px;
         margin: 1rem 0 2rem 0;
         cursor: pointer;
+        color: white;
 
         :hover {background-color: #59323F;}
     }

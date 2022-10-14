@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
 import './App.css';
-import Home from "./Pages/Home";
-import Login from "./Pages/Login";
-import Register from "./Pages/Register";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Rountes from "./Rountes";
 
 
 function App() {
@@ -27,11 +24,7 @@ function App() {
           draggable
           pauseOnHover
         />
-        <Routes>
-          <Route path="/" element={ <Login setUser={setUser} /> } />
-          <Route path="/register" element={ <Register /> } />
-          <Route path="/home" element={ <Home  user={user} /> } />
-        </Routes>
+        <Rountes setUser={setUser} user={user}></Rountes>
       </div>
   );
 }
