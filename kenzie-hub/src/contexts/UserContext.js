@@ -13,6 +13,8 @@ export const UserProvider = ({children}) => {
 
     const [techs, setTechs] = useState(user.techs)
 
+    const [isLoged, setIsLoged] = useState(false)
+
     async function loadUser () {
         const token = localStorage.getItem("@TOKEN")
         if (token) {
@@ -41,6 +43,7 @@ export const UserProvider = ({children}) => {
             }
         }
     }
+    
 
     useEffect(() => {
         autoLogin()
@@ -58,6 +61,7 @@ export const UserProvider = ({children}) => {
             window.localStorage.setItem("@TOKEN", res.data.token)
             window.localStorage.setItem("@USERID", res.data.user.id)
             setUser(res.data.user)
+            setIsLoged(true)
             toast("Sucesso total campeão!")
             navigate("./home")
         })
@@ -75,7 +79,7 @@ export const UserProvider = ({children}) => {
     }
 
     return (
-        <UserContext.Provider value={{Login, user, setUser, Register, loadUser, techs, setTechs}}>
+        <UserContext.Provider value={{Login, user, setUser, Register, loadUser, techs, setTechs, isLoged}}>
             {children}
         </UserContext.Provider>
     )

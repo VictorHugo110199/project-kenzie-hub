@@ -9,7 +9,7 @@ import ModalTech from "../../components/ModalTech";
 
 function Home () {
 
-    const {user, techs, setTechs} = useContext(UserContext)
+    const {user, techs, setTechs, isLoged} = useContext(UserContext)
 
     const navigate = useNavigate()
 
@@ -38,7 +38,7 @@ function Home () {
     return (
         <>
             {
-            user ?
+            isLoged ?
                 (<ContainerPage>
                     {
                         isModalOpen &&
