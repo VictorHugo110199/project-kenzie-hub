@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,10 +6,6 @@ import Rountes from "./Rountes";
 
 
 function App() {
-
-  const [user, setUser] = useState({})
-
-
 
   return (
       <div className='App-header'>
@@ -24,7 +20,7 @@ function App() {
           draggable
           pauseOnHover
         />
-        <Rountes setUser={setUser} user={user}></Rountes>
+        <Rountes></Rountes>
       </div>
   );
 }

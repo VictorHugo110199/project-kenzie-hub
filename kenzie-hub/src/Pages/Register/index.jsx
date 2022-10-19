@@ -4,24 +4,17 @@ import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-import  api  from "../../services/api"
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
 function Register () {
 
     const navigate = useNavigate()
+    const {Register} = useContext(UserContext)
 
     const onSubmitFunction = (data) => {
         reset()
-
-        api
-        .post("/users", data)
-        .then((res) => {
-            console.log(res)
-            toast("Conta criada com sucesso!")
-            //navigate("/")
-        })
-        .catch((err) => toast(err.response.data.message[0]))
+        Register(data)
     }
 
     const formSchema = yup.object().shape({

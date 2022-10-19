@@ -4,27 +4,21 @@ import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-import api from "../../services/api";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
-function Login ({setUser}) {
+
+function Login () {
 
     const navigate = useNavigate()
 
+    const {Login} = useContext(UserContext)
+
     const onSubmitFunction = (data) => {
         reset()
-        api
-        .post("/sessions", data)
-        .then((res) => {
-            setUser(res.data)
-            window.localStorage.clear()
-            window.localStorage.setItem("@TOKEN", res.data.token)
-            window.localStorage.setItem("@USERID", res.data.user.id)
-            toast("Sucesso total campeão!")
-            navigate("./home")
-        })
-        .catch((err) => toast(err.response.data.message))
+        Login(data)
     }
+
 
     const formSchema = yup.object().shape({
         email: yup
