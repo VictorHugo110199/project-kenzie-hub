@@ -28,8 +28,8 @@ function ModalTech ({setModalState}) {
     
             try {
                 api.defaults.headers.authorization = `Bearer ${token}`
-                const res = await api.post('/users/techs', data)
-                console.log(res)
+                await api.post('/users/techs', data)
+
             } catch (error) {
                 console.error(error)
             }

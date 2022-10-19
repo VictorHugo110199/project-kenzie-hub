@@ -21,7 +21,7 @@ export const UserProvider = ({children}) => {
             try {
                 api.defaults.headers.authorization = `Bearer ${token}`
                 const { data } = await api.get('/profile')
-                
+                setUser(data)
                 setTechs(data.techs)
             } catch (error) {
                 console.error(error)
@@ -43,7 +43,7 @@ export const UserProvider = ({children}) => {
             }
         }
     }
-    
+
 
     useEffect(() => {
         autoLogin()
@@ -79,7 +79,7 @@ export const UserProvider = ({children}) => {
     }
 
     return (
-        <UserContext.Provider value={{Login, user, setUser, Register, loadUser, techs, setTechs, isLoged}}>
+        <UserContext.Provider value={{Login, user, setUser, Register, loadUser, techs, setTechs, isLoged, setIsLoged}}>
             {children}
         </UserContext.Provider>
     )

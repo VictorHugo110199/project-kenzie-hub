@@ -3,13 +3,14 @@ import Logo from "../../assets/Logo.png"
 import { Navigate, useNavigate } from "react-router-dom";
 import AddTechs from "../../assets/btnadd.png"
 import deletTech from "../../assets/delet.png"
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import ModalTech from "../../components/ModalTech";
+import api from "../../services/api";
 
 function Home () {
 
-    const {user, techs, setTechs, isLoged} = useContext(UserContext)
+    const {user, techs, setTechs, isLoged, setIsLoged} = useContext(UserContext)
 
     const navigate = useNavigate()
 
@@ -26,14 +27,32 @@ function Home () {
         navigate("/")
     }
 
-    function handleTech (title) {
-        
+    async function handleTech (id) {
+        const token = localStorage.getItem("@TOKEN")
+        if (token) {
+    
+            try {
+                api.defaults.headers.authorization = `Bearer ${token}`
+                await api.delete(`/users/techs/${id}`)
+            } catch (error) {
+                console.error(error)
+            }
+    
+        }
 
         const newTechs = techs.filter((elem) => {
-            return elem.title !== title
+            return elem.id !== id
         })
         setTechs(newTechs)
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem("@TOKEN")
+        if (token) {
+            setIsLoged(true)
+            navigate("/home")
+        }
+    }, []);
 
     return (
         <>
@@ -86,7 +105,7 @@ function Home () {
                                                 <img 
                                                     src={deletTech} 
                                                     alt="Imagem de lixeira" 
-                                                    onClick={() => handleTech(elem.title)} 
+                                                    onClick={() => handleTech(elem.id)} 
                                                 />
                                             </DivTechLevelDeletBtn>
                                         </li>
