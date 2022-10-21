@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../../contexts/UserContext";
 
 
@@ -12,7 +12,7 @@ function Login () {
 
     const navigate = useNavigate()
 
-    const {Login} = useContext(UserContext)
+    const {Login, setIsLoged} = useContext(UserContext)
 
     const onSubmitFunction = (data) => {
         reset()
@@ -33,6 +33,14 @@ function Login () {
     const { register, handleSubmit, formState:{ errors }, reset } = useForm({
         resolver: yupResolver(formSchema)
     })
+
+    useEffect(() => {
+        const token = localStorage.getItem("@TOKEN")
+        if (token) {
+            setIsLoged(true)
+            navigate("/home")
+        }
+    }, []);
 
     return (
         <ContainerDiv>
