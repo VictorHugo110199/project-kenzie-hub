@@ -37,7 +37,7 @@ function ModalTech ({setModalState}: iModalIsOpen) {
     
             try {
                 api.defaults.headers.authorization = `Bearer ${token}`
-                await api.post('/users/techs', data)
+                await api.post<iCreatTech>('/users/techs', data)
 
             } catch (error) {
                 console.error(error)

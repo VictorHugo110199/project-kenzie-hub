@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 
-
 interface iUserContextProps {
     children: React.ReactNode;
 }
@@ -27,6 +26,23 @@ interface iUserGetProfile {
     updated_at: string,
     avatar_url: null
 }
+
+interface iUserLoginResponse {
+    user: {
+      id: string,
+      name: string,
+      email: string,
+      course_module: string,
+      bio: string,
+      contact: string,
+      created_at: string,
+      updated_at: string,
+      techs: [],
+      works: [],
+      avatar_url: null
+    },
+    token: string
+  }
 
 interface iUserLogin {
     email: string,
@@ -72,7 +88,7 @@ export const UserProvider = ({children}: iUserContextProps) => {
         if (token) {
             try {
                 api.defaults.headers.authorization = `Bearer ${token}`
-                const { data } = await api.get('/profile')
+                const { data } = await api.get<iUserGetProfile>('/profile')
                 setUser(data)
                 setTechs(data.techs)
             } catch (error) {
@@ -86,7 +102,7 @@ export const UserProvider = ({children}: iUserContextProps) => {
         if (token) {
             try {
                 api.defaults.headers.authorization = `Bearer ${token}`
-                const { data } = await api.get('/profile')
+                const { data } = await api.get<iUserGetProfile>('/profile')
                 setUser(data)
                 setTechs(data.techs)
             } catch (error) {
@@ -106,8 +122,8 @@ export const UserProvider = ({children}: iUserContextProps) => {
     }, [user]);
 
     async function Login (data: iUserLogin) {
-        await api
-        .post("/sessions", data)
+        await api 
+        .post<iUserLoginResponse>("/sessions", data)
         .then((res) => {
             window.localStorage.clear()
             window.localStorage.setItem("@TOKEN", res.data.token)
@@ -123,7 +139,7 @@ export const UserProvider = ({children}: iUserContextProps) => {
 
     function Register (data: iUserRegister) {
         api
-        .post("/users", data)
+        .post<iUserRegister>("/users", data)
         .then((res) => {
             toast("Conta criada com sucesso!")
             navigate("/")
