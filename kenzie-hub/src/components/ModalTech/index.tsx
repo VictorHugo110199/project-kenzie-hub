@@ -1,19 +1,28 @@
-import { ModalDiv, DivHeaderForm, ModalPage, DivForm } from "./style.js"
-import X from "../../assets/X.png"
+import { ModalDiv, DivHeaderForm, ModalPage, DivForm } from "./style"
 import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import api from "../../services/api.js";
+import api from "../../services/api";
 import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext.js";
+import { UserContext } from "../../contexts/UserContext";
 
+interface iModalIsOpen {
+    setModalState: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-function ModalTech ({setModalState}) {
+interface iCreatTech {
+    title: string,
+    status: string
+}
 
+function ModalTech ({setModalState}: iModalIsOpen) {
+    
+    const X = require("../../assets/X.png") 
+    
     const { loadUser } = useContext(UserContext)
 
 
-    const onSubmitFunction = (data) => {
+    const onSubmitFunction = (data: iCreatTech) => {
         creatTech(data)
         setModalState(false)
         loadUser()
@@ -21,7 +30,7 @@ function ModalTech ({setModalState}) {
         
     }
     
-    async  function creatTech (data) {
+    async  function creatTech (data: iCreatTech) {
         
         const token = localStorage.getItem("@TOKEN")
         if (token) {
@@ -43,7 +52,7 @@ function ModalTech ({setModalState}) {
             .required("Nome da tecnologia obrigatorio"),
     })
 
-    const { register, handleSubmit, formState:{ errors }, reset} = useForm({
+    const { register, handleSubmit, formState:{ errors }, reset} = useForm<iCreatTech>({
         resolver: yupResolver(formSchema)
     })
 

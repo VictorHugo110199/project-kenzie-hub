@@ -3,12 +3,12 @@ import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 
-function Rountes ({setUser, user}) {
+function Rountes () {
     return (
         <Routes>
-            <Route path="/" element={ <Login setUser={setUser} /> } />
+            <Route path="/" element={ <Login /> } />
             <Route path="/register" element={ <Register /> } />
-            <Route path="/home" element={ <Home  user={user} /> } />
+            <Route path="/home" element={ <Home /> } />
             <Route path="*" element={<Navigate to="/" />}/>
       </Routes>
     )

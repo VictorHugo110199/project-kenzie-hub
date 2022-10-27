@@ -1,4 +1,3 @@
-import Logo from "../../assets/Logo.png"
 import { ContainerForm, DivHeader, DivForm, DivNameInput} from "./style";
 import * as yup from 'yup';
 import { useForm } from "react-hook-form";
@@ -7,12 +6,24 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 
+interface iRegister {
+    email: string,
+    password: string | number,
+    confirmpassword: string | number,
+    name: string,
+    bio: string,
+    contact: string | number,
+    course_module: string
+}
+
 function Register () {
+
+    const Logo = require("../../assets/Logo.png")
 
     const navigate = useNavigate()
     const {Register} = useContext(UserContext)
 
-    const onSubmitFunction = (data) => {
+    const onSubmitFunction = (data: iRegister) => {
         reset()
         Register(data)
     }
@@ -40,7 +51,7 @@ function Register () {
             .required("Contato Obrigatorio"),
     })
 
-    const { register, handleSubmit, formState:{ errors }, reset} = useForm({
+    const { register, handleSubmit, formState:{ errors }, reset} = useForm<iRegister>({
         resolver: yupResolver(formSchema)
     })
 

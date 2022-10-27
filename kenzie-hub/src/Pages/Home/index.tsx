@@ -1,8 +1,5 @@
 import { ContainerPage, Header, DivUserInfos, MainTechs, DivTechLevelDeletBtn, DivTechHeader } from "./style";
-import Logo from "../../assets/Logo.png"
 import { Navigate, useNavigate } from "react-router-dom";
-import AddTechs from "../../assets/btnadd.png"
-import deletTech from "../../assets/delet.png"
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import ModalTech from "../../components/ModalTech";
@@ -10,16 +7,20 @@ import api from "../../services/api";
 
 function Home () {
 
+    const Logo = require("../../assets/Logo.png")
+    const AddTechs = require("../../assets/btnadd.png")
+    const deletTech = require("../../assets/delet.png")
+
     const {user, techs, setTechs, isLoged, setIsLoged} = useContext(UserContext)
 
     const navigate = useNavigate()
 
-    const name = (user.name)
-    const module = (user.course_module)
+    const name = (user?.name)
+    const module = (user?.course_module)
 
 
     
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState (false)
 
 
     function LogOut () {
@@ -27,7 +28,7 @@ function Home () {
         navigate("/")
     }
 
-    async function handleTech (id) {
+    async function handleTech (id: string) {
         const token = localStorage.getItem("@TOKEN")
         if (token) {
     
@@ -61,13 +62,7 @@ function Home () {
                 (<ContainerPage>
                     {
                         isModalOpen &&
-                            <ModalTech  
-                                setModalState={setIsModalOpen}
-                                techs={techs}
-                                setTechs={setTechs}
-                            >
-
-                            </ModalTech>
+                            <ModalTech setModalState={setIsModalOpen}/>
                     }
                     <Header>
                         <div>
@@ -105,7 +100,7 @@ function Home () {
                                                 <img 
                                                     src={deletTech} 
                                                     alt="Imagem de lixeira" 
-                                                    onClick={() => handleTech(elem.id)} 
+                                                    onClick={() => handleTech(elem.id!)} 
                                                 />
                                             </DivTechLevelDeletBtn>
                                         </li>
